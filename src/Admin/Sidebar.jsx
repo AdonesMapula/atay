@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../Firebase/firebase";
 import logo from "../assets/Pictures/translogo.png";
-import { LayoutDashboard, Calendar, ShoppingCart, Mic, Ticket, LogOut, TicketIcon, Monitor } from "lucide-react";
+import { LayoutDashboard, Calendar, ShoppingCart, Mic, Ticket, LogOut, TicketIcon, Monitor,ListMusic } from "lucide-react";
 
 const Sidebar = ({ onLogout }) => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const Sidebar = ({ onLogout }) => {
   };
 
   return (
-    <div className="h-screen w-64 bg-black text-white flex flex-col items-center py-6 overflow-hidden ">
+    <div className="fixed left-0 top-0 h-screen w-64 z-50 bg-black text-white flex flex-col items-center py-6 overflow-y-auto shadow-lg">
 
       {/* Logo */}
       <div className="mb-6">
@@ -31,26 +31,29 @@ const Sidebar = ({ onLogout }) => {
       
       {/* Navigation */}
       <nav className="w-full flex flex-col space-y-2 px-4">
-        <NavLink to="/admin/Dashboard" className={({ isActive }) => isActive ? "flex items-center px-4 py-2 bg-gray-700 rounded-lg" : "flex items-center px-4 py-2 hover:bg-gray-700 rounded-lg"}>
-          <LayoutDashboard className="mr-3" size={20} /> Dashboard
-        </NavLink>
-        <NavLink to="/admin/Event" className={({ isActive }) => isActive ? "flex items-center px-4 py-2 bg-gray-700 rounded-lg" : "flex items-center px-4 py-2 hover:bg-gray-700 rounded-lg"}>
-          <Calendar className="mr-3" size={20} /> Events
-        </NavLink>
-        <NavLink to="/admin/Shop" className={({ isActive }) => isActive ? "flex items-center px-4 py-2 bg-gray-700 rounded-lg" : "flex items-center px-4 py-2 hover:bg-gray-700 rounded-lg"}>
-          <ShoppingCart className="mr-3" size={20} /> Add Product
-        </NavLink>
-        <NavLink to="/admin/Emcee" className={({ isActive }) => isActive ? "flex items-center px-4 py-2 bg-gray-700 rounded-lg" : "flex items-center px-4 py-2 hover:bg-gray-700 rounded-lg"}>
-          <Mic className="mr-3" size={20} /> Add Emcee
-        </NavLink>
-        <NavLink to="/admin/CreateTix" className={({ isActive }) => isActive ? "flex items-center px-4 py-2 bg-gray-700 rounded-lg" : "flex items-center px-4 py-2 hover:bg-gray-700 rounded-lg"}>
-          <TicketIcon className="mr-3" size={20} /> Create Event Ticket
-        </NavLink>
-        <NavLink to="/admin/TixMonitor" className={({ isActive }) => isActive ? "flex items-center px-4 py-2 bg-gray-700 rounded-lg" : "flex items-center px-4 py-2 hover:bg-gray-700 rounded-lg"}>
-          <Monitor className="mr-3" size={20} /> Ticket Management
-        </NavLink>
-        
-      </nav>
+  <NavLink to="/admin/Dashboard" className={({ isActive }) => isActive ? "flex items-center px-4 py-2 bg-gray-700 rounded-lg" : "flex items-center px-4 py-2 hover:bg-gray-700 rounded-lg"}>
+    <LayoutDashboard className="mr-3" size={20} /> Dashboard
+  </NavLink>
+  <NavLink to="/admin/Event" className={({ isActive }) => isActive ? "flex items-center px-4 py-2 bg-gray-700 rounded-lg" : "flex items-center px-4 py-2 hover:bg-gray-700 rounded-lg"}>
+    <Calendar className="mr-3" size={20} /> Events
+  </NavLink>
+  <NavLink to="/admin/Shop" className={({ isActive }) => isActive ? "flex items-center px-4 py-2 bg-gray-700 rounded-lg" : "flex items-center px-4 py-2 hover:bg-gray-700 rounded-lg"}>
+    <ShoppingCart className="mr-3" size={20} /> Shop
+  </NavLink>
+  <NavLink to="/admin/Emcee" className={({ isActive }) => isActive ? "flex items-center px-4 py-2 bg-gray-700 rounded-lg" : "flex items-center px-4 py-2 hover:bg-gray-700 rounded-lg"}>
+    <Mic className="mr-3" size={20} /> Emcees
+  </NavLink>
+  <NavLink to="/admin/CreateTix" className={({ isActive }) => isActive ? "flex items-center px-4 py-2 bg-gray-700 rounded-lg" : "flex items-center px-4 py-2 hover:bg-gray-700 rounded-lg"}>
+    <TicketIcon className="mr-3" size={20} /> Create Ticket
+  </NavLink>
+  <NavLink to="/admin/TixMonitor" className={({ isActive }) => isActive ? "flex items-center px-4 py-2 bg-gray-700 rounded-lg" : "flex items-center px-4 py-2 hover:bg-gray-700 rounded-lg"}>
+    <Monitor className="mr-3" size={20} /> Manage Tickets
+  </NavLink>
+  <NavLink to="/admin/Playlist" className={({ isActive }) => isActive ? "flex items-center px-4 py-2 bg-gray-700 rounded-lg" : "flex items-center px-4 py-2 hover:bg-gray-700 rounded-lg"}>
+    <ListMusic className="mr-3" size={20} /> Playlists
+  </NavLink>
+</nav>
+
 
       {/* Logout */}
       <div className="mt-auto mb-4">
