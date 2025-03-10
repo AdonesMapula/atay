@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../Firebase/firebase";
 import logo from "../assets/Pictures/translogo.png";
-import { LayoutDashboard, Calendar, ShoppingCart, Mic, Ticket, LogOut, TicketIcon, Monitor,ListMusic } from "lucide-react";
+import { LayoutDashboard, Calendar, ShoppingCart, Mic, ShirtIcon, LogOut, TicketIcon, Monitor,ListMusic } from "lucide-react";
 
 const Sidebar = ({ onLogout }) => {
   const navigate = useNavigate();
@@ -48,6 +48,9 @@ const Sidebar = ({ onLogout }) => {
   </NavLink>
   <NavLink to="/admin/TixMonitor" className={({ isActive }) => isActive ? "flex items-center px-4 py-2 bg-gray-700 rounded-lg" : "flex items-center px-4 py-2 hover:bg-gray-700 rounded-lg"}>
     <Monitor className="mr-3" size={20} /> Manage Tickets
+  </NavLink>
+  <NavLink to="/admin/ShopManager" className={({ isActive }) => isActive ? "flex items-center px-4 py-2 bg-gray-700 rounded-lg" : "flex items-center px-4 py-2 hover:bg-gray-700 rounded-lg"}>
+    <ShirtIcon className="mr-3" size={20} /> Shop Orders
   </NavLink>
   <NavLink to="/admin/Playlist" className={({ isActive }) => isActive ? "flex items-center px-4 py-2 bg-gray-700 rounded-lg" : "flex items-center px-4 py-2 hover:bg-gray-700 rounded-lg"}>
     <ListMusic className="mr-3" size={20} /> Playlists

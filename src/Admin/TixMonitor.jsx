@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../Firebase/firebase";
-import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
+import { collection, getDocs, updateDoc, deleteDoc, doc } from "firebase/firestore";
 import { Dialog } from "@headlessui/react";
+import { FaCheck, FaTimes, FaUndo, FaTrash } from "react-icons/fa";
 
 function TixMonitor() {
   const [soldTickets, setSoldTickets] = useState([]);
@@ -37,6 +38,15 @@ function TixMonitor() {
     }
   };
 
+  const deleteTicket = async (id) => {
+    try {
+      await deleteDoc(doc(db, "soldtickets", id));
+      setSoldTickets((prevTickets) => prevTickets.filter((ticket) => ticket.id !== id));
+    } catch (error) {
+      console.error("Error deleting ticket: ", error);
+    }
+  };
+
   const openDialog = (ticket, action) => {
     setSelectedTicket({ ...ticket, action });
     setIsOpen(true);
@@ -60,9 +70,8 @@ function TixMonitor() {
         </h1>
         <p className="text-gray-400 mt-2 italic">Rapollo's Ticket Management</p>
       </header>
-      
-       {/* Filters */}
-       {/* Filters */}
+
+      {/* Filters */}
       <div className="mb-6 flex justify-between bg-gray-800 p-4 rounded-md">
         <input
           type="text"
@@ -92,8 +101,9 @@ function TixMonitor() {
           />
         </div>
       </div>
+
       {/* Sold Tickets Table */}
-      <div className="w-full  overflow-x-auto">
+      <div className="w-full overflow-x-auto">
         <table className="w-full border border-white text-white">
           <thead>
             <tr className="bg-gray-800 text-white">
@@ -103,6 +113,7 @@ function TixMonitor() {
               <th className="border px-4 py-2">Quantity</th>
               <th className="border px-4 py-2">Purchase Date</th>
               <th className="border px-4 py-2">Status</th>
+              <th className="border px-4 py-2">Gcash Receipt</th>
               <th className="border px-4 py-2">Actions</th>
             </tr>
           </thead>
@@ -116,9 +127,30 @@ function TixMonitor() {
                 <td className="border px-4 py-2">{ticket.purchaseDate}</td>
                 <td className="border px-4 py-2 font-bold">{ticket.status || "Pending"}</td>
                 <td className="border px-4 py-2">
-                  <button onClick={() => openDialog(ticket, "Approved")} className="bg-green-600 px-3 py-1 mx-1 rounded">Approve</button>
-                  <button onClick={() => openDialog(ticket, "Declined")} className="bg-red-600 px-3 py-1 mx-1 rounded">Decline</button>
-                  <button onClick={() => openDialog(ticket, "Pending")} className="bg-gray-600 px-3 py-1 mx-1 rounded">Reset</button>
+                  {ticket.receiptURL ? (
+                    <a href={ticket.receiptURL} target="_blank" rel="noopener noreferrer" className="text-blue-400 underline">
+                      View Receipt
+                    </a>
+                  ) : (
+                    <span className="text-gray-500 italic">No Receipt/COD</span>
+                  )}
+                </td>
+
+                <td className="border px-4 py-2 flex justify-center gap-2">
+                  <button onClick={() => openDialog(ticket, "Approved")} className="bg-green-600 p-2 rounded">
+                    <FaCheck />
+                  </button>
+                  <button onClick={() => openDialog(ticket, "Declined")} className="bg-red-600 p-2 rounded">
+                    <FaTimes />
+                  </button>
+                  <button onClick={() => openDialog(ticket, "Pending")} className="bg-gray-600 p-2 rounded">
+                    <FaUndo />
+                  </button>
+                  {ticket.status === "Declined" && (
+                    <button onClick={() => deleteTicket(ticket.id)} className="bg-red-800 p-2 rounded">
+                      <FaTrash />
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}
@@ -132,7 +164,7 @@ function TixMonitor() {
           <p>Are you sure you want to {selectedTicket?.action} this ticket?</p>
           <div className="flex justify-end gap-4 mt-4">
             <button className="bg-white text-black border-2 border-gray-600 px-4 py-2 rounded" onClick={() => setIsOpen(false)}>Cancel</button>
-            <button className="bg-black text-white  px-4 py-2 rounded" onClick={() => updateStatus(selectedTicket.id, selectedTicket.action)}>Confirm</button>
+            <button className="bg-black text-white px-4 py-2 rounded" onClick={() => updateStatus(selectedTicket.id, selectedTicket.action)}>Confirm</button>
           </div>
         </div>
       </Dialog>

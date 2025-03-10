@@ -182,7 +182,7 @@
 
     return (
       <div className="bg-black min-h-screen text-white p-6 ml-64 font-mono">
-          <ToastContainer theme="dark" />
+          <ToastContainer theme="dark" /> 
         <div className="mb-10 border-b border-gray-800 pb-4">
             <h1 className="text-4xl font-bold tracking-tight uppercase flex items-center">
               <span className="inline-block transform -skew-x-12 bg-white text-black px-3 py-1 mr-3">EMCEES</span>

@@ -9,6 +9,7 @@ import Login from "./Admin/Login";
 import CreateTix from "./Admin/CreateTix";
 import TixMonitor from "./Admin/TixMonitor";
 import Playlist from "./Admin/Playlist";
+import ShopManager from "./Admin/ShopManager";
 
 function PrivateLayout({ isLoggedIn, onLogout }) {
   return isLoggedIn ? (
@@ -44,6 +45,7 @@ function App() {
             <Route path="Emcee" element={<Emcee />} />
             <Route path="CreateTix" element ={<CreateTix/>} />
             <Route path="TixMonitor" element ={<TixMonitor/>} />
+            <Route path="ShopManager" element ={<ShopManager/>} />
             <Route path="Playlist" element ={<Playlist/>} />
           </Route>
         </Route>
